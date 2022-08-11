@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+Business Name:
+<input type="text" id="txtBName" />
+<br />
+Last Name:
+<input type="text" id="txtLName" />
+<br />
+First Name:
+<input type="text" id="txtFName" />
+<br />
+Middle Name:
+<input type="text" id="txtMName" />
+<br />
+Suffix:
+<input type="text" id="txtSuffix" />
+<br />
+City:
+<input type="text" id="txtCity" />
+<br />
+State:
+<input type="text" id="txtState" />
+<br />
+<br />
+<br />
+<input type="button" id="btnGet" value="Load Search Parameters" />
+
+<table id="results">
+</table>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#btnGet").click(function () {
+            var para = '{Business_Name: "' + $("#txtBName").val() +
+                '", Last_Name:"' + $("#txtLName").val() +
+                '", First_Name:"' + $("#txtFName").val() +
+                '", Middle_Name:"' + $("#txtMName").val() +
+                '", Suffix:"' + $("#txtSuffix").val() +
+                '", City:"' + $("#txtCity").val() +
+                '", State:"' + $("#txtState").val() + '" }';
+            console.log(para);
+            $.ajax({
+                type: "POST",
+                url: "/api/scraping/parameters",
+                data: para,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $("#results").append("<tr><td>Go to /api/scraping/ucc for results</td></tr>");
+                },
+                failure: function (response) {
+                        alert(response.responseText);
+                },
+                error: function (response) {
+                        alert(response.responseText);
+                }
+            });
+        });
+    });
+</script>
